@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Proxy - Manage Students</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-green-50 font-sans">
+  <div class="flex flex-col md:flex-row h-screen">
+    <!-- Sidebar -->
+    <aside class="w-full md:w-64 bg-white shadow-md p-4">
+      <div class="flex justify-between items-center">
+        <div class="text-2xl font-bold text-blue-600 mb-6">Anti-Proxy</div>
+        <button id="mobile-menu-toggle" class="md:hidden bg-blue-500 text-white p-2 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <nav id="menu-items" class="space-y-4 hidden md:block">
+        <a href="mark-attendance.html" class="block text-gray-700 hover:text-blue-600">Dashboard</a>
+        <a href="mark-attendance.html" class="block text-gray-700 hover:text-blue-600">Mark Attendance</a>
+        <a href="view-attendance.html" class="block text-gray-700 hover:text-blue-600">View Attendance</a>
+        <a href="manage-students.html" class="block text-blue-600 font-medium">Manage Students</a>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex-1 flex flex-col">
+      <header class="bg-white shadow px-4 py-4 flex justify-between items-center">
+        <h1 class="text-xl md:text-2xl font-semibold text-blue-600">Manage Students</h1>
+        <div class="text-gray-600 text-sm md:text-base">Welcome, Teacher</div>
+      </header>
+
+      <main class="p-4 md:p-6 overflow-y-auto">
+        <!-- Tabs -->
+        <div class="mb-6">
+          <div class="flex border-b border-gray-200">
+            <button id="tab-add" class="px-4 py-2 text-blue-600 border-b-2 border-blue-600 font-medium">Add Student</button>
+            <button id="tab-view" class="px-4 py-2 text-gray-600 hover:text-blue-600">View Students</button>
+          </div>
+        </div>
+
+        <!-- Add Student Form -->
+        <div id="add-student-form" class="bg-white rounded-lg shadow-md p-4 md:p-6">
+          <h2 class="text-lg md:text-xl font-bold mb-4 text-blue-600">Add New Student</h2>
+          
+          <form id="student-form" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="student-name" class="block mb-1 text-gray-700">Student Name</label>
+                <input type="text" id="student-name" class="w-full p-2 border border-gray-300 rounded" required>
+              </div>
+              
+              <div>
+                <label for="roll-number" class="block mb-1 text-gray-700">Roll Number</label>
+                <div class="flex">
+                  <span class="inline-flex items-center px-3 text-gray-600 bg-gray-100 border border-r-0 border-gray-300 rounded-l-md">
+                    IC-2K22-
+                  </span>
+                  <input type="text" id="roll-number" placeholder="XX" class="w-full p-2 border border-gray-300 rounded-r-md" maxlength="2" required>
+                </div>
+              </div>
+              
+              <div>
+                <label for="student-course" class="block mb-1 text-gray-700">Course</label>
+                <select id="student-course" class="w-full p-2 border border-gray-300 rounded" required>
+                  <option value="">Select Course</option>
+                  <option value="MCA">MCA</option>
+                  <option value="M.Tech">M.Tech</option>
+                  <option value="MBA (MS)">MBA (MS)</option>
+                  <option value="MBA(TOURISM)">MBA(TOURISM)</option>
+                  <option value="B PHARAMA">B PHARAMA</option>
+                  <option value="BBA">BBA</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="student-semester" class="block mb-1 text-gray-700">Semester</label>
+                <select id="student-semester" class="w-full p-2 border border-gray-300 rounded" required>
+                  <option value="">Select Semester</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="student-section" class="block mb-1 text-gray-700">Section</label>
+                <select id="student-section" class="w-full p-2 border border-gray-300 rounded" required>
+                  <option value="">Select Section</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="student-photo" class="block mb-1 text-gray-700">Student Photo</label>
+                <input type="file" id="student-photo" accept="image/*" class="w-full p-2 border border-gray-300 rounded" required>
+                <p class="text-sm text-gray-500 mt-1">Upload a clear front-facing photo</p>
+              </div>
+            </div>
+            
+            <div class="mt-6">
+              <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Add Student</button>
+              <button type="reset" class="ml-2 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">Reset</button>
+            </div>
+          </form>
+          
+          <!-- Photo Preview -->
+          <div id="photo-preview" class="mt-4 hidden">
+            <h3 class="font-medium text-gray-700 mb-2">Photo Preview</h3>
+            <div class="relative w-40 h-40 border rounded overflow-hidden">
+              <img id="preview-image" class="w-full h-full object-cover" src="#" alt="Preview">
+            </div>
+          </div>
+        </div>
+        
+        <!-- View Students Table -->
+        <div id="view-students-table" class="bg-white rounded-lg shadow-md p-4 md:p-6 hidden">
+          <h2 class="text-lg md:text-xl font-bold mb-4 text-blue-600">All Students</h2>
+          
+          <!-- Filter Controls -->
+          <div class="mb-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block mb-1 text-gray-700">Filter by Course</label>
+              <select id="filter-course" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">All Courses</option>
+                <option value="MCA">MCA</option>
+                <option value="M.Tech">M.Tech</option>
+                <option value="MBA (MS)">MBA (MS)</option>
+                <option value="MBA(TOURISM)">MBA(TOURISM)</option>
+                <option value="B PHARAMA">B PHARAMA</option>
+                <option value="BBA">BBA</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 text-gray-700">Filter by Semester</label>
+              <select id="filter-semester" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">All Semesters</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-1 text-gray-700">Filter by Section</label>
+              <select id="filter-section" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">All Sections</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <button id="apply-filters" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Apply Filters</button>
+          </div>
+          
+          <!-- Students Table -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+              <thead class="bg-blue-100">
+                <tr>
+                  <th class="py-2 px-4 text-left">Name</th>
+                  <th class="py-2 px-4 text-left">Roll Number</th>
+                  <th class="py-2 px-4 text-left">Course</th>
+                  <th class="py-2 px-4 text-left">Semester</th>
+                  <th class="py-2 px-4 text-left">Section</th>
+                  <th class="py-2 px-4 text-center">Photo</th>
+                  <th class="py-2 px-4 text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="students-list">
+                <tr>
+                  <td colspan="7" class="py-4 text-center text-gray-500">Loading students...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div id="no-students" class="text-gray-500 py-4 text-center hidden">
+            No students found matching the selected filters.
+          </div>
+        </div>
+        
+      </main>
+    </div>
+  </div>
+
+  <!-- Status Messages -->
+  <div id="status-message" class="fixed bottom-4 right-4 p-4 rounded-lg shadow-lg hidden"></div>
+
+  <script src="js/manage-students.js"></script>
+</body>
+</html>
